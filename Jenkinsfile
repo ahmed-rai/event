@@ -27,7 +27,7 @@ pipeline {
                 sh "mvn compile"
             }
         }
-  stage('Test') {
+  stage('JUnit/Mock') {
             steps {
                 echo 'Running tests...'
                 sh 'mvn test'
