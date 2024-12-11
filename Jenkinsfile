@@ -17,25 +17,7 @@ pipeline {
                
                sh "mvn clean"
             } }
- stage('Upload to Nexus') {
-            steps {
-                script {
-                    nexusArtifactUploader(
-                        nexusVersion: NEXUS_VERSION,
-                        protocol: 'http',
-                        nexusUrl: "${NEXUS_URL}",
-                        groupId: 'tn.esprit',
-                        artifactId: 'eventsProject',
-                        version: '1.0.0-SNAPSHOT',
-                        repository: 'maven-snapshots',
-                        credentialsId: NEXUS_CREDENTIALS,
-                        artifacts: [[artifactId: 'eventsProject', file: 'target/eventsProject-1.0.0-SNAPSHOT.jar', type: 'jar']]
-                    )
-                }
-            }
-        }
-          
-        
+
         stage('Maven Compile') {
             steps {
                 echo "compilation avec maven"
@@ -47,6 +29,12 @@ pipeline {
                 echo 'Running tests...'
                 sh 'mvn test'
                 junit 'target/surefire-reports/*.xml'
+            }
+        }
+            stage('Nexus Deploy') {
+            steps {
+                echo "Déploiement sur Nexus"
+                sh "mvn deploy -DskipTests"
             }
         }
 
