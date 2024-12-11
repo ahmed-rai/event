@@ -16,8 +16,7 @@ pipeline {
                echo "Clean avec maven"
                
                sh "mvn clean"
-
-            }
+            } }
  stage('Upload to Nexus') {
             steps {
                 script {
@@ -36,7 +35,7 @@ pipeline {
             }
         }
           
-        }
+        
         stage('Maven Compile') {
             steps {
                 echo "compilation avec maven"
