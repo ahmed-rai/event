@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     stages {
-        stage('Checkout GIT') {
+        stage('GIT') {
             steps {
             
                 echo 'Pulling... '
@@ -27,5 +27,23 @@ pipeline {
                 sh "mvn compile"
             }
         }
+  stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh 'mvn test'
+                junit 'target/surefire-reports/*.xml'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube1') {
+                    sh 'mvn sonar:sonar -X'
+                }
+            }
+        }
+
+
+        
     }
 }
