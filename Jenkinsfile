@@ -49,7 +49,11 @@ pipeline {
 */
 
 stage('Docker push action9559') {
-           
+           steps {
+               echo "pushing vers docker"
+               
+            
+            }
         }
         
 
