@@ -50,10 +50,8 @@ pipeline {
 
 stage('Docker push action9559') {
            
-           steps {
-               
-                }  
         }
+        
 
         
     }
