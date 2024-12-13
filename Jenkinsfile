@@ -31,12 +31,12 @@ pipeline {
                 junit 'target/surefire-reports/*.xml'
             }
         }
-            stage('Nexus Deploy') {
+          /*  stage('Nexus Deploy') {
             steps {
                 echo "Déploiement sur Nexus"
                 sh "mvn deploy -DskipTests"
             }
-        }
+        } */
    stage('Test') {
     steps {
         echo 'Testing...'
