@@ -73,7 +73,7 @@ stage('Test') {
             }
         }
 
-*/
+
        
 
         // Second Stage: Run Trivy to Check Git Repository for Secrets
@@ -85,8 +85,24 @@ stage('Docker push action9559') {
                
         }
         }
-        
+        */ 
+    stage('Build Docker Image') {
+            steps {
+                echo "Building Docker image..."
+                sh '''
+                docker build -t events-project:1.0 .
+                '''
+            }
+        }
 
+        stage('Run Docker Container') {
+            steps {
+                echo "Running Docker container..."
+                sh '''
+                docker run -d -p 8087:8087 --name events-container events-project:1.0
+                '''
+            }
+        }
         
     }
 }
