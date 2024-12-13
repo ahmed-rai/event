@@ -89,6 +89,7 @@ stage('Docker push action9559') {
         }
       stage('Run Docker Container') {
     steps {
+          echo 'Running Docker...'
        }
     }
 
