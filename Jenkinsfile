@@ -37,6 +37,17 @@ pipeline {
                 sh "mvn deploy -DskipTests"
             }
         }
+   stage('Test') {
+    steps {
+        echo 'Testing...'
+        snykSecurity(
+            snykInstallation: 'snyk', // Corrected the typo here
+            snykTokenId: 'd3880968-16ec-48b3-96f3-6d7809b96642',
+            // Example with specific depth, adjust or remove according to your needs
+            additionalArguments: '--all-projects --detection-depth=5'
+        )
+    }
+}
 
         /*stage('SonarQube Analysis') {
             steps {
