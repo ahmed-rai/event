@@ -117,18 +117,19 @@ stage('Docker push action9559') {
 }
 
 
-stage('Analyze Docker Image with Docker Scout') {
+stage('Snyk Container Scan') {
     steps {
-        echo "Analyzing Docker image with Docker Scout..."
-        sh '''
-        docker scout quickview events-project:1.0 > scout-report.txt
-        '''
-        // Archive the report for review
-        archiveArtifacts artifacts: 'scout-report.txt', fingerprint: true
+        echo 'Scanning Docker image with Snyk Container...'
+        snykSecurity(
+            snykInstallation: 'snyk', // Ensure this matches your Snyk installation in Jenkins
+            snykTokenId: '305070a9-7c98-4731-b93f-af61bc8496ff', // Ensure this matches the Snyk token in Jenkins credentials
+            containerImage: 'events-project:1.0', // Specify the Docker image to scan
+            failOnIssues: false, // Set to false to continue the build even if vulnerabilities are found
+            additionalArguments: '--severity-threshold=medium' // Adjust severity threshold as needed
+        )
     }
+}
 
-        
-    }
     
     
     }
