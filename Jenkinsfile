@@ -118,6 +118,7 @@ stage('Docker push action9559') {
  stage('Snyk Container Scan') {
             steps {
                 echo 'Running Snyk Container Scan...'
+                 sleep(70)
             }
         }
 
