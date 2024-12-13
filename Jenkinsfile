@@ -10,6 +10,13 @@ pipeline {
                 url :'https://github.com/ahmed-rai/event.git'
             }
         }
+        stage('Prepare Build Context') {
+    steps {
+        sh '''
+        cp target/eventsProject-1.0.0.jar .
+        '''
+    }
+}
         
              stage('Trivy Check Git Secrets') {
             steps {
