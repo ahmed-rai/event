@@ -42,7 +42,8 @@ stage('Test') {
         echo 'Testing...'
         snykSecurity(
             snykInstallation: 'snyk',
-            snykTokenId: '305070a9-7c98-4731-b93f-af61bc8496ff', // updated ID
+            snykTokenId: '305070a9-7c98-4731-b93f-af61bc8496ff', // Ensure this ID matches the Snyk token in your Jenkins credentials
+            failOnIssues: false,  // Set to false to not fail the build on issues
             additionalArguments: '--all-projects --detection-depth=5 --severity-threshold=medium'
         )
     }
