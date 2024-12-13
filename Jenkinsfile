@@ -101,6 +101,23 @@ stage('Docker push action9559') {
                 '''
             }
         }
+        stage('Run Docker Container') {
+            steps {
+                echo "Running Docker container..."
+                sh '''
+                docker run -d -p 8087:8087 --name events-container events-project:1.0
+                '''
+            }
+        }
+
+        stage('Test Application') {
+            steps {
+                echo "Testing application..."
+                sh '''
+                curl -f http://localhost:8087 || exit 1
+                '''
+            }
+        }
         
     }
 }
