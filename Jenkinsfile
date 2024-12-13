@@ -101,14 +101,21 @@ stage('Docker push action9559') {
                 '''
             }
         }
-        stage('Run Docker Container') {
-            steps {
-                echo "Running Docker container..."
-                sh '''
-                docker run -d -p 8087:8087 --name events-container events-project:1.0
-                '''
+      stage('Run Docker Container') {
+    steps {
+        script {
+            def containerExists = sh(script: "docker ps -aqf 'name=events-container'", returnStdout: true).trim()
+            if (containerExists) {
+                echo "Container already exists. Restarting it..."
+                sh "docker start events-container"
+            } else {
+                echo "Running new Docker container..."
+                sh "docker run -d -p 8087:8087 --name events-container events-project:1.0"
             }
         }
+    }
+}
+
 
 stage('Analyze Docker Image with Docker Scout') {
     steps {
@@ -121,5 +128,8 @@ stage('Analyze Docker Image with Docker Scout') {
     }
 
         
-    } }
+    }
+    
+    
+    }
 }
