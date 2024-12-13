@@ -93,20 +93,11 @@ stage('Docker push action9559') {
         }
         }
         */ 
-    stage('Build Docker Image') {
+      stage('Build Docker Image') {
             steps {
-                echo "Building Docker image..."
+                echo "Building Docker image with multi-stage Dockerfile..."
                 sh '''
                 docker build -t events-project:1.0 .
-                '''
-            }
-        }
-
-        stage('Run Docker Container') {
-            steps {
-                echo "Running Docker container..."
-                sh '''
-                docker run -d -p 8087:8087 --name events-container events-project:1.0
                 '''
             }
         }
