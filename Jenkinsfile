@@ -18,20 +18,6 @@ pipeline {
     }
 }
         
-             stage('Trivy Check Git Secrets') {
-            steps {
-                echo 'Checking Git repository for secrets...'
-              
-                sh 'trivy repo --format "json" -o "trivy-git-repo-scan.json" https://github.com/ahmed-rai/event.git'
-             
-            }
-            post {
-                // Archive the scan report as an artifact for later review
-                always {
-                    archiveArtifacts artifacts: 'trivy-git-repo-scan.json', fingerprint: true
-                }
-            }
-        }
   
         stage('Maven Clean') {
             steps {
@@ -59,7 +45,7 @@ pipeline {
                 sh "mvn deploy -DskipTests"
             }
         } */
-stage('Test') {
+stage('SNYK SAST') {
     steps {
         echo 'Testing...'
         snykSecurity(
@@ -92,7 +78,9 @@ stage('Docker push action9559') {
                
         }
         }
-        */ 
+        
+        */
+        
       stage('Build Docker Image') {
             steps {
                 echo "Building Docker image with multi-stage Dockerfile..."
@@ -116,21 +104,34 @@ stage('Docker push action9559') {
     }
 }
 
+             stage('Trivy Check Git Secrets') {
+            steps {
+                echo 'Checking Git repository for secrets...'
+              
+                sh 'trivy repo --format "json" -o "trivy-git-repo-scan.json" https://github.com/ahmed-rai/event.git'
+             
+            }
+            post {
+                // Archive the scan report as an artifact for later review
+                always {
+                    archiveArtifacts artifacts: 'trivy-git-repo-scan.json', fingerprint: true
+                }
+            }
+        }
 
 stage('Snyk Container Scan') {
-    steps {
-        echo 'Running Snyk Container Scan...'
-        snykSecurity(
-            snykInstallation: 'snyk', // Ensure this matches your Snyk installation in Jenkins
-            snykTokenId: '305070a9-7c98-4731-b93f-af61bc8496ff', // Ensure this matches the Snyk token in Jenkins credentials
-            failOnIssues: false, // Set to false to continue the build even if vulnerabilities are found
-            additionalArguments: 'container test events-project:1.0 --severity-threshold=high --exclude-base-image-vulns'
+  steps {
+       echo 'Running Snyk Container Scan...'
+  //      snykSecurity(
+    //        snykInstallation: 'snyk', // Ensure this matches your Snyk installation in Jenkins
+      //      snykTokenId: '305070a9-7c98-4731-b93f-af61bc8496ff', // Ensure this matches the Snyk token in Jenkins credentials
+        //    failOnIssues: false, // Set to false to continue the build even if vulnerabilities are found
+          //  additionalArguments: 'container test events-project:1.0 --severity-threshold=high --exclude-base-image-vulns'
         )
-    }
-}
+    } 
 
 
     
     
     }
-}
+} }
