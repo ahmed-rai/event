@@ -84,25 +84,14 @@ stage('Docker push action9559') {
       stage('Build Docker Image') {
             steps {
                 echo "Building Docker image with multi-stage Dockerfile..."
-                sh '''
-                docker build -t events-project:1.0 .
-                '''
+            
             }
         }
       stage('Run Docker Container') {
     steps {
-        script {
-            def containerExists = sh(script: "docker ps -aqf 'name=events-container'", returnStdout: true).trim()
-            if (containerExists) {
-                echo "Container already exists. Restarting it..."
-                sh "docker start events-container"
-            } else {
-                echo "Running new Docker container..."
-                sh "docker run -d -p 8087:8087 --name events-container events-project:1.0"
-            }
-        }
+       }
     }
-}
+
          stage('ZAP DAST') {
             steps {
                 echo 'Running OWASP ZAP DAST...'
