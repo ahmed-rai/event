@@ -59,6 +59,38 @@ stage('Test') {
         }
 
 */
+         stage('Setup Trivy') {
+            steps {
+                script {
+                    // Check if Trivy is installed and install if not
+                    def trivyInstalled = sh(script: "trivy --version || echo 'not installed'", returnStdout: true).trim()
+                    if (trivyInstalled == 'not installed') {
+                        echo 'Installing Trivy...'
+                        // Download and install Trivy
+                        sh "wget https://github.com/aquasecurity/trivy/releases/download/v0.19.2/trivy_0.19.2_Linux-64bit.deb"
+                        sh "sudo dpkg -i trivy_0.19.2_Linux-64bit.deb"
+                    } else {
+                        echo "Trivy is already installed"
+                    }
+                }
+            }
+        }
+
+        // Second Stage: Run Trivy to Check Git Repository for Secrets
+        stage('Trivy Check Git Secrets') {
+            steps {
+                echo 'Checking Git repository for secrets...'
+              
+                sh 'trivy repo --format "json" -o "trivy-git-repo-scan.json" https://github.com/ahmed-rai/event.git'
+             
+            }
+            post {
+                // Archive the scan report as an artifact for later review
+                always {
+                    archiveArtifacts artifacts: 'trivy-git-repo-scan.json', fingerprint: true
+                }
+            }
+        }
 
 stage('Docker push action9559') {
            steps {
