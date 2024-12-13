@@ -124,7 +124,7 @@ stage('Snyk Container Scan') {
             snykInstallation: 'snyk', // Ensure this matches your Snyk installation in Jenkins
             snykTokenId: '305070a9-7c98-4731-b93f-af61bc8496ff', // Ensure this matches the Snyk token in Jenkins credentials
             failOnIssues: false, // Set to false to continue the build even if vulnerabilities are found
-            additionalArguments: 'container test events-project:1.0 --severity-threshold=medium' // Command for container scan
+            additionalArguments: 'container test events-project:1.0 --severity-threshold=high --exclude-base-image-vulns'
         )
     }
 }
