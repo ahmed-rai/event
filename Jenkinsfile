@@ -121,5 +121,5 @@ stage('Analyze Docker Image with Docker Scout') {
     }
 
         
-    }
+    } }
 }
