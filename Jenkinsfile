@@ -103,6 +103,12 @@ stage('Docker push action9559') {
         }
     }
 }
+         stage('ZAP DAST') {
+            steps {
+                echo 'Running OWASP ZAP DAST...'
+               
+            }
+        }
 
              stage('Trivy Check Git Secrets') {
             steps {
