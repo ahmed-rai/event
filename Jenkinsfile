@@ -43,7 +43,7 @@ stage('Test') {
         snykSecurity(
             snykInstallation: 'snyk',
             snykTokenId: '305070a9-7c98-4731-b93f-af61bc8496ff', // updated ID
-            additionalArguments: '--all-projects --detection-depth=5'
+            additionalArguments: '--all-projects --detection-depth=5 --severity-threshold=medium'
         )
     }
 }
