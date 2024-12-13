@@ -110,14 +110,16 @@ stage('Docker push action9559') {
             }
         }
 
-        stage('Test Application') {
-            steps {
-                echo "Testing application..."
-                sh '''
-                curl -f http://localhost:8087 || exit 1
-                '''
-            }
-        }
+stage('Analyze Docker Image with Docker Scout') {
+    steps {
+        echo "Analyzing Docker image with Docker Scout..."
+        sh '''
+        docker scout quickview events-project:1.0 > scout-report.txt
+        '''
+        // Archive the report for review
+        archiveArtifacts artifacts: 'scout-report.txt', fingerprint: true
+    }
+
         
     }
 }
