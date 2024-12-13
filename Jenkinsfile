@@ -10,7 +10,8 @@ pipeline {
                 url :'https://github.com/ahmed-rai/event.git'
             }
         }
-         stage('Trivy Check Git Secrets') {
+        
+             stage('Trivy Check Git Secrets') {
             steps {
                 echo 'Checking Git repository for secrets...'
               
@@ -76,20 +77,7 @@ stage('Test') {
        
 
         // Second Stage: Run Trivy to Check Git Repository for Secrets
-        stage('Trivy Check Git Secrets') {
-            steps {
-                echo 'Checking Git repository for secrets...'
-              
-                sh 'trivy repo --format "json" -o "trivy-git-repo-scan.json" https://github.com/ahmed-rai/event.git'
-             
-            }
-            post {
-                // Archive the scan report as an artifact for later review
-                always {
-                    archiveArtifacts artifacts: 'trivy-git-repo-scan.json', fingerprint: true
-                }
-            }
-        }
+   
 
 stage('Docker push action9559') {
            steps {
